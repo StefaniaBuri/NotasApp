@@ -1,20 +1,50 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title> NOTES MANAGER</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">NOTES MANAGER</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-item>
+    <ion-input
+      label="TAREA"
+      placeholder=" Escribe una tarea .."
+      [(ngModel)]="nuevaTarea"
+    ></ion-input>
+    <ion-badge color="primary">{{servicioTareas.tareas.length}}</ion-badge>
+  </ion-item>
+
+  <br />
+  <ion-button color="tertiary" expand="full" (click)="crear()"
+    >CREAR</ion-button
+  >
+
+  <br />
+  <div>
+    <ion-list>
+      <ion-item-sliding *ngFor="let tarea of servicioTareas.tareas; index as i">
+        <ion-item [button]="true">
+          <ion-label>{{tarea}}</ion-label>
+        </ion-item>
+        <ion-item-options slot="end">
+          <ion-item-option color="danger" expandable="true" (click)="borrar(i)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <ion-toast
+      [isOpen]="isToastOpen"
+      message="Tarea eliminada"
+      [duration]="5000"
+      (didDismiss)="setOpen(false)"
+    ></ion-toast>
   </div>
 </ion-content>
